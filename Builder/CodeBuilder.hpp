@@ -1,5 +1,4 @@
 #include <string>
-// #include <unordered_map>
 #include <vector>
 #include <iomanip>
 #include <iostream>
@@ -7,42 +6,44 @@
 
 using namespace std;
 
-class CodeBuilder
+struct Class
 {
-public:
-  CodeBuilder(const string &class_name) : m_name(class_name)
-  {
-    // todo
-  }
+  string name;
+  vector<pair<string, string>> fields;
 
-  CodeBuilder &add_field(const string &name, const string &type)
+  friend ostream &operator<<(ostream &os, const Class &obj)
   {
-    // if (m_fields.find(name) == m_fields.end()){
-    //   m_fields.insert({name, type});
-    // } else {
-    //   cout << "Field " << quoted(name) << " is already exist in class " << m_name << ";" << endl;
-    // }
-    m_fields.push_back({name, type});
-    return *this;
-  }
-
-  friend ostream &operator<<(ostream &os, const CodeBuilder &obj)
-  {
-    os << "class " << obj.m_name << endl;
+    os << "class " << obj.name << endl;
     os << "{" << endl;
-    // for (const auto& [name, type] : obj.m_fields) {
-    //   os << "  " << type << " " << name << ";" << endl;
-    // }
-    for (const auto field : obj.m_fields)
+    for (const auto field : obj.fields)
     {
       os << "  " << field.second << " " << field.first << ";" << endl;
     }
     os << "};" << endl;
     return os;
   }
+};
+
+class CodeBuilder
+{
+public:
+  CodeBuilder(const string &class_name)
+  {
+    m_class.name = class_name;
+  }
+
+  CodeBuilder &add_field(const string &name, const string &type)
+  {
+    m_class.fields.push_back({name, type});
+    return *this;
+  }
+
+  friend ostream &operator<<(ostream &os, const CodeBuilder &obj)
+  {
+    os << obj.m_class << endl;
+    return os;
+  }
 
 private:
-  string m_name;
-  // unordered_map<string, string> m_fields;
-  vector<pair<string, string>> m_fields;
+  Class m_class;
 };
