@@ -1,3 +1,6 @@
+#ifndef CODE_BUILDER_HPP
+#define CODE_BUILDER_HPP
+
 #include <string>
 #include <vector>
 #include <iomanip>
@@ -47,3 +50,5 @@ public:
 private:
   Class m_class;
 };
+
+#endif

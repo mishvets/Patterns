@@ -1,3 +1,6 @@
+#ifndef PERSON_FACTORY_HPP
+#define PERSON_FACTORY_HPP
+
 #include <string>
 #include <ostream>
 using namespace std;
@@ -31,3 +34,5 @@ public:
     return obj;
   }
 };
+
+#endif
